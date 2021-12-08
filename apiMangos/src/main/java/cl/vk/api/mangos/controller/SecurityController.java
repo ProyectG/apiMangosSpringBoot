@@ -1,5 +1,7 @@
 package cl.vk.api.mangos.controller;
 
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +15,7 @@ import cl.vk.api.mangos.dto.TokenResponse;
 @RequestMapping("/api/v1/security")
 public class SecurityController extends SecurityDao{
 
-	@PostMapping("/token")
+	@PostMapping(value = "/token", produces = MediaType.APPLICATION_JSON)
 	public TokenResponse getToken(@RequestBody Token token)
 	{
 		return obtenerToken(token);

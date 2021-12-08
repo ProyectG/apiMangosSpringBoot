@@ -1,5 +1,7 @@
 package cl.vk.api.mangos.controller;
 
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -13,10 +15,10 @@ import cl.vk.api.mangos.dto.ExecuteResponse;
 @RestController
 @RequestMapping("/api/v1/server")
 public class CommandController extends CommandDao {
-	//@RequestHeader("Authorization") String jwt,
-	@PostMapping("/execute")
-	public ExecuteResponse executeCommand( @RequestBody Execute input) {
-		return ejecutarComando(input);
+	
+	@PostMapping(value="/execute", produces =MediaType.APPLICATION_JSON)
+	public ExecuteResponse executeCommand(@RequestHeader("Authorization") String jwt, @RequestBody Execute input) {
+		return ejecutarComando(jwt,input);
 		
 	}
 }

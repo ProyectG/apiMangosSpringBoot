@@ -3,6 +3,7 @@ package cl.vk.api.mangos.controller;
 import cl.vk.api.mangos.dao.ConfigurationDao;
 
 import javax.ws.rs.HeaderParam;
+import javax.ws.rs.core.MediaType;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,16 +18,16 @@ import cl.vk.api.mangos.dto.GetConfiguration;
 @RestController
 @RequestMapping("/api/v1/mangos")
 public class ConfigurationController extends ConfigurationDao{
-
-	@GetMapping("/test")
+	
+	@GetMapping(value = "/test" , produces = MediaType.APPLICATION_XHTML_XML)
 	public String test()
 	{return "Respondiendo del servicio de prueba.";}
 	
-	@PostMapping("/setconfig")
-	public ConfigurationResponse config(@RequestBody Configuration input)
-	{return  setConfiguration(input);}
+	@PostMapping(value="/setconfig", produces = MediaType.APPLICATION_JSON )
+	public ConfigurationResponse config(@HeaderParam("Authorizatiuon") String jwt, @RequestBody Configuration input)
+	{return  setConfiguration(jwt,input);}
 	
-	@GetMapping("/getconfig")
+	@GetMapping(value = "/getconfig", produces = MediaType.APPLICATION_JSON)
 	public GetConfiguration getConfig(@HeaderParam("Authorization") String jwt) 
 	{return getConf(jwt);}	
 }

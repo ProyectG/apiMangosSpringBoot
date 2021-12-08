@@ -7,6 +7,7 @@ import cl.vk.api.mangos.conf.ServerParam;
 import cl.vk.api.mangos.dto.Execute;
 import cl.vk.api.mangos.dto.ExecuteResponse;
 import cl.vk.api.mangos.parameter.Commands;
+import cl.vk.mangos.transmision.JWTutils;
 import cl.vk.mangos.transmision.SOAPutils;
 import cl.vk.mangos.transmision.XMLutils;
 
@@ -14,11 +15,13 @@ public class CommandDao extends ServerParam {
 
 	private SOAPutils soapUtils = new SOAPutils();
 	private XMLutils xmlUtils = new XMLutils();
-	private Logger logger = LoggerFactory.getLogger(CommandDao.class);
+	private Logger logger = LoggerFactory.getLogger(CommandDao.class);	
+	protected static JWTutils jwtUtils = new JWTutils();
 
-	public ExecuteResponse ejecutarComando(Execute input) {
+	public ExecuteResponse ejecutarComando(String token,Execute input) {
 		ExecuteResponse respuesta = new ExecuteResponse();
 		if (isStatus()) {
+			if(jwtUtils.validarJWT(token)) {
 			try {
 				soapUtils.generateSoapMessage(input.getComando());
 				String soapResponse = soapUtils.sendMessage();
@@ -34,6 +37,11 @@ public class CommandDao extends ServerParam {
 			} catch (Exception e) {
 				respuesta.setCod("1");
 				respuesta.setDsc("Error al ejecutar el comando");
+			}
+			}else
+			{
+				respuesta.setCod("1");
+				respuesta.setDsc("Acceso no autorizado");
 			}
 		} else {
 			respuesta.setCod("1");
