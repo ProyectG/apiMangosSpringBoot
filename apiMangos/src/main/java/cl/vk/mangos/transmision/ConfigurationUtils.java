@@ -28,11 +28,29 @@ public class ConfigurationUtils {
 		return propiedades;
 	}
 
+	public static String getUser() {
+		return user;
+	}
+
+	public static void setUser(String user) {
+		ConfigurationUtils.user = user;
+	}
+
+	public static String getPass() {
+		return pass;
+	}
+
+	public static void setPass(String pass) {
+		ConfigurationUtils.pass = pass;
+	}
+
 	protected void cargarPropiedades()
 	{
 		try(InputStream entrada = new FileInputStream("./"+ARCHIVO_CONFIGURACION)){
 			propiedades.load(entrada);
 			estadoConf = true;
+			user = propiedades.getProperty("mangos.user");
+			pass = propiedades.getProperty("mangos.pass");
 		}catch(IOException e)
 		{
 			LOGGER.warn("El archivo no se encontro, se utilizara la configuracion local");

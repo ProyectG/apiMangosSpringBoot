@@ -24,7 +24,6 @@ public class SecurityDao extends ConfigurationUtils{
 	private String usuario;
 	@Value("${mangos.pass}")
 	private String password;
-	@SuppressWarnings("unused")
 	@Value("${mangos.jwt.key}")
 	private String jwtKey;
 
@@ -37,7 +36,7 @@ public class SecurityDao extends ConfigurationUtils{
 	public TokenResponse obtenerToken(Token input) {
 		TokenResponse respuesta = new TokenResponse();
 		if (!estadoConf) {
-			if (this.usuario.equalsIgnoreCase(input.getUsername()) && this.password.equalsIgnoreCase(input.getPassword())) {
+			if (this.usuario.equals(input.getUsername()) && this.password.equals(input.getPassword())) {
 				respuesta.setCod("0");
 				respuesta.setDsc("Token generado exitosamente");
 				respuesta.setToken(generateJWT(this.jwtKey));
@@ -48,10 +47,10 @@ public class SecurityDao extends ConfigurationUtils{
 				respuesta.setToken("-");
 			}
 		} else {
-			if (user.equalsIgnoreCase(input.getUsername()) && pass.equalsIgnoreCase(input.getPassword())) {
+			if (user.equals(input.getUsername()) && pass.equals(input.getPassword())) {
 				respuesta.setCod("0");
 				respuesta.setDsc("Token generado exitosamente");
-				respuesta.setToken(generateJWT(this.jwtKey));
+				respuesta.setToken(generateJWT(ConfigurationUtils.propiedades.getProperty("mangos.jwt.key")));
 
 			} else {
 				respuesta.setCod("-1");
@@ -61,7 +60,6 @@ public class SecurityDao extends ConfigurationUtils{
 		}
 		return respuesta;
 	}
-
 
 	private String generateJWT(String key) {
 		Date fecha = new Date(System.currentTimeMillis() + (4 * MINUTO_MILISEGUNDOS));
