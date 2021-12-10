@@ -48,15 +48,30 @@ El servicio respondera con codigo 0 para la configuracion exitosa.
 
 ### Ver Configuracion
 
-*En Construccion*
+Para ver la configuracion se debe hacer un **GET** al metodo **/api/v1/mangos/getconfig** con el campo **Authorization** en el header
 
 ### Ejecutar Comando
 
-*En Construccion*
-
+Para ejecutar un comando es simple, no se valida el tipo de comando solo manda a ejecutar lo enviado y devuelve la respuesta del sistema, para ello
+se debe enviar un **POST** al metodo **/api/v1/server/execute** con el campo **Authorization** en el header
 
 ## Archivo de configuracion
 
-*En construccion*
+Para ejecutar una configuracion personal se debe crear un archivo llamado **apiConf.properties**
+dentro debe contener las siguientes propiedades
+
+* mangos.user
+* mangos.pass
+* mangos.jwt.key
+* mangos.security
+
+Cada propiedad debe contener un valor. por ejemplo:
+
+```
+mangos.user=usuario
+mangos.pass=contraseña
+mangos.jwt.key=llave para generar JWT
+mangos.security=true/false **(este parametro pedira el token o no, aunque en el header debera seguir trayendo el campo Authorization)**
+```
 
 
