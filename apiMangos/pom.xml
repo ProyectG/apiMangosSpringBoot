@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>cl.vk.api.mangos</groupId>
 	<artifactId>apiMangos</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>apiMangos</name>
 	<description>api para consumir servicios SOAP del servidor de mangosd para WOW</description>

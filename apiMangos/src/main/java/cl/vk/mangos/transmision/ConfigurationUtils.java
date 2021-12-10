@@ -14,7 +14,7 @@ public class ConfigurationUtils {
 	protected static String user;
 	protected static String pass;
 	final Logger LOGGER = LoggerFactory.getLogger(ConfigurationUtils.class);
-	protected static Properties propiedades;
+	protected static Properties propiedades = new Properties();
 	protected static boolean estadoConf=false;
 	
 	public ConfigurationUtils(){
@@ -24,10 +24,13 @@ public class ConfigurationUtils {
 			LOGGER.info("Propiedades ya cargadas");
 	}
 	
+	public static Properties getPropiedades() {
+		return propiedades;
+	}
+
 	protected void cargarPropiedades()
 	{
 		try(InputStream entrada = new FileInputStream("./"+ARCHIVO_CONFIGURACION)){
-			propiedades = new Properties();
 			propiedades.load(entrada);
 			estadoConf = true;
 		}catch(IOException e)
